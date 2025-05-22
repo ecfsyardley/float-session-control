@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Float Session Control</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      margin-bottom: 2rem;
+    }
+    .room {
+      margin-bottom: 2rem;
+    }
+    .room h2 {
+      margin-bottom: 1rem;
+    }
+    button {
+      font-size: 1.2rem;
+      margin: 0.5rem;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .duration-button {
+      background-color: #4CAF50;
+      color: white;
+    }
+    #status {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Start a Float Session</h1>
+
+  <div class="room">
+    <h2>Room 1</h2>
+    <button class="duration-button" onclick="startSession(60, 'Room 1')">60 Minutes</button>
+    <button class="duration-button" onclick="startSession(90, 'Room 1')">90 Minutes</button>
+    <button class="duration-button" onclick="startSession(120, 'Room 1')">120 Minutes</button>
+  </div>
+
+  <div class="room">
+    <h2>Room 2</h2>
+    <button class="duration-button" onclick="startSession(60, 'Room 2')">60 Minutes</button>
+    <button class="duration-button" onclick="startSession(90, 'Room 2')">90 Minutes</button>
+    <button class="duration-button" onclick="startSession(120, 'Room 2')">120 Minutes</button>
+  </div>
+
+  <div id="status"></div>
+
+  <script>
+    function startSession(duration, room) {
+      fetch('/start-float', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ duration, room })
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('status').innerText = data.message;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('status').innerText = 'Error starting session.';
+      });
+    }
+  </script>
+</body>
+</html>
