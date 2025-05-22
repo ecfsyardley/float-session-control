@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 async function logToGoogleSheet(room, duration) {
-  const doc = new GoogleSpreadsheet('YOUR_SHEET_ID_HERE');
+  const doc = new GoogleSpreadsheet('19x0oR22IqCCWWsunxbblm1AM5Kek_FV-I-iTpR6PBk8');
   await doc.useServiceAccountAuth(creds);
   await doc.loadInfo();
   const sheet = doc.sheetsByIndex[0];
